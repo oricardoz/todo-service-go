@@ -48,7 +48,7 @@ func createDBInstance() {
 
 	fmt.Println("Connected to MongoDB")
 
-	collection = client.Database(dbName).Collection(collName) // <- ESSA LINHA FOI CORRIGIDA
+	collection = client.Database(dbName).Collection(collName)
 
 	fmt.Println("Collection initialized")
 }
