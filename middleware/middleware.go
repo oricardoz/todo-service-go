@@ -26,7 +26,7 @@ func init() {
 func loadTheEnv() {
 	err := godotenv.Load(".env")
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Println("Error loading .env file")
 	}
 }
 
@@ -38,12 +38,12 @@ func createDBInstance() {
 	clientOptions := options.Client().ApplyURI(connectionString)
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	err = client.Ping(context.TODO(), nil)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	fmt.Println("Connected to MongoDB")
@@ -138,7 +138,7 @@ func taskComplete(id string) {
 	_, err = collection.UpdateOne(context.Background(), filter, update)
 
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 }
@@ -147,24 +147,24 @@ func getAllTask() []primitive.M {
 
 	cur, err := collection.Find(context.Background(), bson.D{{}})
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	var results []primitive.M
 	for cur.Next(context.Background()) {
 		var result bson.M
 		if err := cur.Decode(&result); err != nil {
-			log.Fatal(err)
+			log.Println(err)
 		}
 		results = append(results, result)
 	}
 
 	if err := cur.Err(); err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	if err := cur.Close(context.Background()); err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	return results
@@ -174,7 +174,7 @@ func deleteAllTask() {
 
 	_, err := collection.DeleteMany(context.Background(), bson.D{{}})
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 }
@@ -190,7 +190,7 @@ func deleteTask(id string) {
 
 	_, err = collection.DeleteOne(context.Background(), filter)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 }
 
@@ -207,7 +207,7 @@ func undoTask(id string) {
 
 	_, err = collection.UpdateOne(context.Background(), filter, update)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 }
 
@@ -224,7 +224,7 @@ func getOneTask(id string) *models.Task {
 
 	err = collection.FindOne(context.Background(), filter).Decode(&task)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	return &task
@@ -234,7 +234,7 @@ func insertOneTask(task models.Task) {
 
 	_, err := collection.InsertOne(context.Background(), task)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 }

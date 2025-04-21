@@ -17,7 +17,7 @@ func Router() *mux.Router {
 	router.HandleFunc("/api/task", middleware.CreateTask).Methods("POST", "OPTIONS")
 
 	// PUT
-	router.HandleFunc("/api/task/{id}", middleware.CompleteTask).Methods("PUT", "OPTIONS")
+	router.HandleFunc("/api/task/complete/{id}", middleware.CompleteTask).Methods("PUT", "OPTIONS")
 	router.HandleFunc("/api/task/undo/{id}", middleware.UndoTask).Methods("PUT", "OPTIONS")
 
 	// DELETE
